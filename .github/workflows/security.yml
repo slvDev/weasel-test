@@ -1,0 +1,26 @@
+name: Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  weasel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: slvDev/weasel@main
+        id: weasel
+        with:
+          path: ./src
+          min-severity: Low
+          exclude: test,script
+
+      - name: Upload Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: weasel-report
+          path: weasel-report.json
