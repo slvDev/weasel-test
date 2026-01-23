@@ -161,19 +161,24 @@ jobs:
           path: weasel-filtered.sarif
           if-no-files-found: ignore
 
-      # Show analysis results in job summary
+      # Show analysis results in job summary (overwrite verbose Gemini output)
       - name: Analysis Summary
         if: always()
         run: |
-          echo "## Weasel Security Analysis" >> $GITHUB_STEP_SUMMARY
+          # Clear previous summary and write clean version
+          echo "## Weasel + Gemini Security Analysis" > $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           if [ -f weasel-filtered.sarif ]; then
             FINDINGS=$(jq '.runs[0].results | length' weasel-filtered.sarif 2>/dev/null || echo "0")
             echo "**SARIF generated successfully**" >> $GITHUB_STEP_SUMMARY
-            echo "**Real findings:** $FINDINGS" >> $GITHUB_STEP_SUMMARY
+            echo "**Findings:** $FINDINGS" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            # List findings by severity
+            echo "### Findings" >> $GITHUB_STEP_SUMMARY
+            jq -r '.runs[0].results[] | "- **\(.ruleId)** - \(.locations[0].physicalLocation.artifactLocation.uri):\(.locations[0].physicalLocation.region.startLine)"' weasel-filtered.sarif 2>/dev/null >> $GITHUB_STEP_SUMMARY || true
           else
             echo "**SARIF file not generated**" >> $GITHUB_STEP_SUMMARY
             echo "Check the AI Security Analysis step for errors." >> $GITHUB_STEP_SUMMARY
           fi
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "See [Security tab](../../security/code-scanning) for details." >> $GITHUB_STEP_SUMMARY
+          echo "[View in Security tab](../../security/code-scanning)" >> $GITHUB_STEP_SUMMARY

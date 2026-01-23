@@ -1,0 +1,42 @@
+# weasel.toml
+
+# Paths to include in the analysis.
+# If omitted, it defaults to ["src"]
+# scope = ["src"]
+
+# Paths to exclude from the analysis.
+# These can be directories (including subdirectories) or specific files.
+# If omitted, it defaults to [] (no exclusions)
+# exclude = ["lib", "test"]
+
+# Minimum severity level of detectors to *run* during analysis.
+# Only detectors with this severity or higher will be executed.
+# Options: "High", "Medium", "Low", "Gas", "NC" (case-insensitive)
+# If omitted, it defaults to "NC" (run all detectors).
+# min_severity = "NC"
+
+# Output format for the report.
+# Options: "json", "md" (or "markdown")
+# If omitted, it defaults to "md".
+# output_format = "md"
+
+# Manual remappings for import resolution
+# Format: "prefix=target_path"
+# Example: remappings = ["@openzeppelin/=lib/openzeppelin-contracts/contracts/", "@solmate/=lib/solmate/src/"]
+# remappings = [
+#     "@openzeppelin/=lib/openzeppelin-contracts/contracts/",
+#     "@solmate/=lib/solmate/src/"
+# ]
+
+# Explicitly exclude specific detectors by ID.
+# Run `weasel detectors` to see all available detector IDs.
+# exclude_detectors = ["floating-pragma", "line-length"]
+
+# Protocol Features
+# By default, all protocol features are enabled.
+[protocol]
+uses_fot_tokens = false      # Fee-on-transfer tokens
+# uses_weird_erc20 = false     # Weird ERC20 tokens (non-standard behavior)
+# uses_native_token = false    # Native ETH handling
+# uses_l2 = false              # L2 chains (Arbitrum, Optimism, etc.)
+# uses_nft = false             # NFT collections (ERC721, ERC1155)
