@@ -30,6 +30,8 @@ jobs:
         with:
           gemini_api_key: ${{ secrets.GEMINI_API_KEY }}
           gemini_model: gemini-3-flash-preview
+          gemini_debug: true  # Stream response to logs
+          upload_artifacts: true  # Upload stdout.log, stderr.log
           settings: |
             {
               "mcpServers": {
