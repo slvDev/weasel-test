@@ -6,6 +6,10 @@ on:
     branches: [main]
   workflow_dispatch:  # Manual trigger for testing
 
+# Configuration
+env:
+  MIN_SEVERITY: Low  # Options: High, Medium, Low, Gas, NC
+
 permissions:
   contents: read
   pull-requests: write
@@ -103,12 +107,12 @@ jobs:
 
             Base command:
             ```bash
-            weasel run -m Medium -f sarif -o weasel-filtered.sarif
+            weasel run -m ${{ env.MIN_SEVERITY }} -f sarif -o weasel-filtered.sarif
             ```
 
             If you found false positive detectors, add `-x` for each one:
             ```bash
-            weasel run -m Medium -f sarif -o weasel-filtered.sarif -x floating-pragma -x unused-import
+            weasel run -m ${{ env.MIN_SEVERITY }} -f sarif -o weasel-filtered.sarif -x floating-pragma -x unused-import
             ```
 
             Rules:
