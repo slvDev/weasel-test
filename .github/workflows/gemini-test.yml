@@ -119,6 +119,7 @@ jobs:
             - Do NOT use `-s` flag - Weasel reads paths from weasel.toml/foundry.toml/hardhat.config
             - Add `-x <detector_id>` for EACH false positive detector you identified
             - The output file MUST be exactly `weasel-filtered.sarif`
+            - NEVER edit or modify the SARIF file after generation. Only `weasel run` should create it.
 
             ## Step 4: Verify Output
             After running the command, verify the file exists:
